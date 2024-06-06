@@ -1,0 +1,25 @@
+.VoltarHome {
+  margin-top: 20px;
+}
+
+h1 {
+  display: block;
+  width: 200px;
+  padding: 5px;
+  text-align: center;
+  background-color: rgb(226, 119, 31);
+  color: white;
+  border-radius: 6px;
+  box-shadow: 1px 1px 2px black;
+}
+
+h3 {
+  display: block;
+  width: 150px;
+  padding: 5px;
+  text-align: center;
+  background-color: brown;
+  color: white;
+  border-radius: 6px;
+  box-shadow: 1px 1px 2px black;
+}

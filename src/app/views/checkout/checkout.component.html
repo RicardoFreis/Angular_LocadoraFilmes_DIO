@@ -1,0 +1,130 @@
+<mat-card class="mat-card-main mat-elevation-z4">
+  <mat-card-title>
+    <h2>Carrinho de compra</h2>
+  </mat-card-title>
+
+  <mat-card>
+    <h2>{{ listSelectedFilms.length }} Itens selecionados !</h2>
+    <h3>Preço total : {{ totalPrice | currency : "BRL" }}</h3>
+
+    <mat-card
+      class="mat-card-film"
+      [class.isValid]="disabled === true"
+      *ngFor="let film of listSelectedFilms"
+    >
+      <mat-card-content class="mat-card-content">
+        <div>
+          <mat-card-title>
+            <img src="{{ film.imgLink }}" alt="capa" />
+          </mat-card-title>
+          <mat-card-title>
+            <h2>{{ film.name }}</h2>
+          </mat-card-title>
+          <mat-card-subtitle class="mat-card-subtitle">
+            {{ film.price | currency : "BRL" }}
+          </mat-card-subtitle>
+        </div>
+        <button mat-flat-button color="warn" (click)="exclude(film)">
+          Remover
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </mat-card>
+
+  <mat-card-actions class="actions-container">
+    <button
+      mat-flat-button
+      color="warn"
+      (click)="excludeAll()"
+      [disabled]="disabled === true"
+      class="excludeAll"
+    >
+      Remover todos
+    </button>
+  </mat-card-actions>
+
+  <mat-card class="mat-form">
+    <form id="form">
+      <strong>Fill in the fields below to payment:</strong>
+      <p>
+        <mat-form-field appearance="outline" class="input-form">
+          <mat-label>
+            {{
+              disabled ? "Please select at least one filme" : "What's your name"
+            }}
+          </mat-label>
+          <input
+            matInput
+            placeholder="Your name"
+            required
+            name="name"
+            [disabled]="disabled === true"
+            [(ngModel)]="client.name"
+          />
+          <i class="material-icons" matSuffix required>person</i>
+          <mat-hint>Ex.: John, Maria...</mat-hint>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline" class="input-form">
+          <mat-label>
+            {{
+              disabled
+                ? "Please select at least one filme"
+                : "what's your address?"
+            }}
+          </mat-label>
+          <input
+            matInput
+            placeholder="Your address"
+            required
+            name="address"
+            [disabled]="disabled === true"
+            [(ngModel)]="client.address"
+          />
+          <i class="material-icons" matSuffix required>home</i>
+          <mat-hint>Ex.: Boa Vista Avenue...</mat-hint>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" class="input-form">
+          <mat-label> Enter your password </mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            required
+            [(ngModel)]="client.password"
+            name="password"
+            [disabled]="disabled === true"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [disabled]="disabled === true"
+          >
+            <i class="material-icons" matSuffix required>{{
+              hide ? "visibility_off" : "visibility"
+            }}</i>
+          </button>
+          <mat-hint
+            >Ex.: Digitos letras, números, caracteres especiais...</mat-hint
+          >
+        </mat-form-field>
+      </p>
+
+      <button
+        type="submit"
+        mat-flat-button
+        class="mat-pay"
+        (click)="payment()"
+        [disabled]="client.password == undefined || client.password == '' || totalPrice == 0 ? 'true' : 'false'"
+      >
+        Pay
+      </button>
+      <button mat-flat-button class="mat-cancel" (click)="cancel()">
+        {{ disabled ? "Back" : "Cancel" }}
+      </button>
+    </form>
+  </mat-card>
+</mat-card>
